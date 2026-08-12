@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ART HOUSE PAINTING — External Estimator</title>
+    <style>
+        :root {
+            --bg-color: #f4f4f6;
+            --card-bg: #ffffff;
+            --text-main: #111111;
+            --text-muted: #555555;
+            --border-color: #d1d1d6;
+            --primary: #000000;
+            --primary-text: #ffffff;
+            --accent: #3a3a3c;
+            --danger: #ff3b30;
+            --radius: 8px;
+            --spacing: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 10px;
+            font-size: 15px;
+            line-height: 1.3;
+        }
+
+        header {
+            background: var(--primary);
+            color: var(--primary-text);
+            padding: 16px;
+            text-align: center;
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing);
+        }
+
+        header h1 {
+            font-size: 18px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        header p {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 4px;
+        }
+
+        .action-bar {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: var(--spacing);
+        }
+
+        .btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: var(--radius);
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--primary-text);
+            border-color: var(--primary);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: #fff;
+            border-color: var(--danger);
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: var(--spacing);
+            margin-bottom: var(--spacing);
+        }
+
+        h2 {
+            font-size: 15px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 16px;
+            background: #fff;
+            color: var(--text-main);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .section-item, .item-row, .prep-row {
+            background: #fafafa;
+            border: 1px solid #e5e5ea;
+            padding: 10px;
+            border-radius: var(--radius);
+            margin-bottom: 8px;
+        }
+
+        .section-header {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin: 8px 0;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            font-weight: normal;
+            color: var(--text-main);
+            text-transform: none;
+            cursor: pointer;
+        }
+
+        .checkbox-label input {
+            width: 18px;
+            height: 18px;
+            margin-right: 6px;
+        }
+
+        .calc-summary {
+            background: #1c1c1e;
+            color: #ffffff;
+            padding: 16px;
+            border-radius: var(--radius);
+            margin-bottom: var(--spacing);
+        }
+
+        .calc-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        .calc-row.total {
+            font-size: 18px;
+            font-weight: 700;
+            border-top: 1px solid #3a3a3c;
+            padding-top: 10px;
+            margin-top: 8px;
+            color: #34c759;
+        }
+
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 6px;
+        }
+
+        @media print {
+            body { background: #fff; color: #000; padding: 0; }
+            .action-bar, header { display: none; }
+            .card { border: none; padding: 0; margin-bottom: 15px; }
+            input, select, textarea { border: none; border-bottom: 1px solid #000; padding: 2px 0; background: transparent; }
+            .calc-summary { background: #eee; color: #000; border: 1px solid #000; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>ART HOUSE PAINTING</h1>
+    <p>External Estimating & Inspection Tool</p>
+</header>
+
+<div class="action-bar">
+    <button class="btn btn-primary" onclick="saveQuote()">Save Quote</button>
+    <button class="btn" onclick="loadQuoteModal()">Load Quote</button>
+    <button class="btn" onclick="newQuote()">New Job</button>
+    <button class="btn btn-primary" onclick="window.print()">Export / Print PDF</button>
+</div>
+
+<!-- 1. PROJECT INFORMATION -->
+<div class="card">
+    <h2>1. Project Information</h2>
+    <div class="form-group">
+        <label>Client Name</label>
+        <input type="text" id="clientName" placeholder="Client Full Name">
+    </div>
+    <div class="form-group">
+        <label>Property Address</label>
+        <input type="text" id="propertyAddress" placeholder="Street, Suburb, Postcode">
+    </div>
+    <div class="grid-2">
+        <div class="form-group">
+            <label>Inspection Date</label>
+            <input type="date" id="inspectionDate">
+        </div>
+        <div class="form-group">
+            <label>Quote Number</label>
+            <input type="text" id="quoteNumber" placeholder="AH-EXT-2026-001">
+        </div>
+    </div>
+    <div class="grid-3" style="grid-template-columns: 1fr 1fr 1fr; gap:6px;">
+        <div class="form-group">
+            <label>Building Type</label>
+            <select id="houseType">
+                <option>Single Storey House</option>
+                <option>Double Storey House</option>
+                <option>Townhouse / Duplex</option>
+                <option>Commercial / Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Substrate</label>
+            <select id="substrateType">
+                <option>Weatherboard / Timber</option>
+                <option>Brick / Render</option>
+                <option>Cladding / Fiber Cement</option>
+                <option>Mixed / Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Access Level</label>
+            <select id="accessLevel">
+                <option>Easy / Ground</option>
+                <option>Ladder Required</option>
+                <option>Scaffolding / EWP</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- 2. EXTERNAL ELEVATIONS / AREAS -->
+<div class="card">
+    <h2>2. Elevations & Surfaces Inspection</h2>
+    <div id="sectionsContainer"></div>
+</div>
+
+<!-- 3. DOORS, WINDOWS & FIXTURES -->
+<div class="card">
+    <h2>3. External Openings & Fixtures</h2>
+    <div id="openingsContainer"></div>
+</div>
+
+<!-- 4. EXTERNAL PREPARATION -->
+<div class="card">
+    <h2>4. External Preparation & Repairs</h2>
+    <div id="prepContainer"></div>
+</div>
+
+<!-- 5. SPECIAL / ACCESS WORK -->
+<div class="card">
+    <h2>5. Special / Access Requirements</h2>
+    <div class="checkbox-group" style="grid-template-columns: 1fr;">
+        <label class="checkbox-label"><input type="checkbox" class="extra-item" data-name="High Reach / Void Area"> High Reach / Void Area</label>
+        <label class="checkbox-label"><input type="checkbox" class="extra-item" data-name="Scaffold Hire & Setup"> Scaffold Hire & Setup</label>
+        <label class="checkbox-label"><input type="checkbox" class="extra-item" data-name="EWP (Boom/Scissor Lift) Needed"> EWP (Boom/Scissor Lift) Needed</label>
+        <label class="checkbox-label"><input type="checkbox" class="extra-item" data-name="Heavy High-Pressure Washing"> Heavy High-Pressure Washing</label>
+        <label class="checkbox-label"><input type="checkbox" class="extra-item" data-name="Plant & Garden Protection"> Plant & Garden Protection</label>
+        <label class="checkbox-label"><input type="checkbox" class="extra-item" data-name="Driveway / Pathway Masking"> Driveway / Pathway Masking</label>
+    </div>
+    <div class="form-group" style="margin-top: 10px;">
+        <label>Extras Total ($ AUD)</label>
+        <input type="number" id="extrasTotal" value="0" oninput="calculateTotals()">
+    </div>
+</div>
+
+<!-- 6. PAINT SYSTEM -->
+<div class="card">
+    <h2>6. Paint System & Specification</h2>
+    <div class="grid-2">
+        <div class="form-group">
+            <label>Body / Walls Coats</label>
+            <select id="paintWallsCoats"><option>2 coats</option><option>1 coat</option><option>3 coats</option></select>
+        </div>
+        <div class="form-group">
+            <label>Trim / Fascia Coats</label>
+            <select id="paintTrimCoats"><option>2 coats</option><option>1 coat</option><option>3 coats</option></select>
+        </div>
+        <div class="form-group">
+            <label>Undercoat / Primer</label>
+            <select id="paintPrimer"><option>Required (Full)</option><option>Spot Priming</option><option>None</option></select>
+        </div>
+        <div class="form-group">
+            <label>Colour Change</label>
+            <select id="paintColourChange"><option>No</option><option>Yes</option></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Paint Product / Brand</label>
+        <input type="text" id="paintProduct" placeholder="e.g. Dulux Weathershield">
+    </div>
+    <div class="form-group">
+        <label>Finish</label>
+        <select id="paintFinish"><option>Low Sheen</option><option>Semi Gloss</option><option>Gloss</option><option>Matt</option><option>Other</option></select>
+    </div>
+</div>
+
+<!-- 7. MATERIALS -->
+<div class="card">
+    <h2>7. Materials & Sundries</h2>
+    <div class="form-group">
+        <label>Total Materials Cost ($ AUD)</label>
+        <input type="number" id="materialsCost" value="0" oninput="calculateTotals()">
+    </div>
+    <div class="form-group">
+        <label>Materials Notes</label>
+        <textarea id="materialsNotes" placeholder="Exterior Primer, Weatherproof Sealant, Timber Filler, Sandpaper, Tape..."></textarea>
+    </div>
+</div>
+
+<!-- 8. FINAL PRICE CALCULATION -->
+<div class="calc-summary">
+    <div class="calc-row"><span>Elevations / Walls:</span><span id="displaySectionTotal">$0.00</span></div>
+    <div class="calc-row"><span>Openings & Fixtures:</span><span id="displayOpeningTotal">$0.00</span></div>
+    <div class="calc-row"><span>Preparation:</span><span id="displayPrepTotal">$0.00</span></div>
+    <div class="calc-row"><span>Extras / Access:</span><span id="displayExtrasTotal">$0.00</span></div>
+    <div class="calc-row"><span>Materials:</span><span id="displayMaterialsTotal">$0.00</span></div>
+    <div class="calc-row" style="border-top: 1px solid #3a3a3c; padding-top: 6px; margin-top: 6px;"><span>Subtotal:</span><span id="displaySubtotal">$0.00</span></div>
+    <div class="calc-row"><span>GST (10%):</span><span id="displayGst">$0.00</span></div>
+    <div class="calc-row total"><span>TOTAL (inc. GST):</span><span id="displayGrandTotal">$0.00</span></div>
+</div>
+
+<!-- 9. NOTES -->
+<div class="card">
+    <h2>9. Site Notes & Exclusions</h2>
+    <div class="form-group">
+        <label>Site Notes / Weather Conditions / Exclusions</label>
+        <textarea id="siteNotes" placeholder="Surface moisture, rot repairs needed, access constraints, exclusions..."></textarea>
+    </div>
+</div>
+
+<!-- 10. FINAL CHECK -->
+<div class="card">
+    <h2>10. Final Verification Checklist</h2>
+    <div class="checklist-grid">
+        <label class="checkbox-label"><input type="checkbox"> All elevations inspected</label>
+        <label class="checkbox-label"><input type="checkbox"> Substrate condition checked</label>
+        <label class="checkbox-label"><input type="checkbox"> Rot/timber damage noted</label>
+        <label class="checkbox-label"><input type="checkbox"> Windows & doors counted</label>
+        <label class="checkbox-label"><input type="checkbox"> Eaves & fascias checked</label>
+        <label class="checkbox-label"><input type="checkbox"> Access/Scaffolding planned</label>
+        <label class="checkbox-label"><input type="checkbox"> Pressure washing assessed</label>
+        <label class="checkbox-label"><input type="checkbox"> Exterior primer confirmed</label>
+        <label class="checkbox-label"><input type="checkbox"> Materials included</label>
+        <label class="checkbox-label"><input type="checkbox"> Weather contingencies considered</label>
+        <label class="checkbox-label"><input type="checkbox"> Exclusions clearly noted</label>
+        <label class="checkbox-label"><input type="checkbox"> GST checked</label>
+    </div>
+</div>
+
+<div class="action-bar">
+    <button class="btn btn-primary" onclick="saveQuote()">Save Quote</button>
+    <button class="btn btn-danger" onclick="newQuote()">Clear / New Job</button>
+</div>
+
+<script>
+    const defaultSections = [
+        "Front Elevation", "Back Elevation", "Left Side Elevation", 
+        "Right Side Elevation", "Eaves & Fascias", "Gables / Barge Boards", 
+        "Verandah / Porch / Deck", "Garage Exterior", "Fences / Gates"
+    ];
+
+    const openingTypes = [
+        "External Doors", "Sliding / Bi-fold Glass Doors", "Standard Windows", 
+        "Large / Feature Windows", "Window Sills / Reveals", "Garage Doors", 
+        "Downpipes / Gutters (Painted)", "Pergola / Patio Posts", "Handrails / Balustrades"
+    ];
+
+    const prepTypes = [
+        "High-Pressure Washing", "Mould / Algae Treatment", "Scraping Flaking Paint", 
+        "Timber Rot Treatment / Replacement", "Gap Sealing / Caulking", "Putty / Glazing Repairs", 
+        "Masonry Crack Stitching / Patching", "Sanding & Feathering Edges", "Spot / Full Priming"
+    ];
+
+    function initApp() {
+        document.getElementById('inspectionDate').valueAsDate = new Date();
+        document.getElementById('quoteNumber').value = 'AH-EXT-' + Math.floor(100000 + Math.random() * 900000);
+        
+        buildSections();
+        buildOpenings();
+        buildPrep();
+        calculateTotals();
+    }
+
+    function buildSections() {
+        const container = document.getElementById('sectionsContainer');
+        container.innerHTML = '';
+        defaultSections.forEach((section) => {
+            const div = document.createElement('div');
+            div.className = 'section-item';
+            div.innerHTML = `
+                <div class="section-header">
+                    <span>${section}</span>
+                </div>
+                <div class="checkbox-group">
+                    <label class="checkbox-label"><input type="checkbox" class="s-surf" value="Body/Walls" checked> Walls / Body</label>
+                    <label class="checkbox-label"><input type="checkbox" class="s-surf" value="Trim" checked> Trim / Details</label>
+                    <label class="checkbox-label"><input type="checkbox" class="s-surf" value="Eaves"> Eaves</label>
+                    <label class="checkbox-label"><input type="checkbox" class="s-surf" value="Balustrade"> Balustrade</label>
+                </div>
+                <div class="grid-3" style="grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top:6px;">
+                    <div>
+                        <label>Condition</label>
+                        <select class="s-cond"><option>Good</option><option selected>Fair</option><option>Poor</option></select>
+                    </div>
+                    <div>
+                        <label>Prep Req.</label>
+                        <select class="s-prep"><option>None</option><option selected>Moderate</option><option>Heavy</option></select>
+                    </div>
+                    <div>
+                        <label>Price ($)</label>
+                        <input type="number" class="s-price" value="0" oninput="calculateTotals()">
+                    </div>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function buildOpenings() {
+        const container = document.getElementById('openingsContainer');
+        container.innerHTML = '';
+        openingTypes.forEach((item) => {
+            const div = document.createElement('div');
+            div.className = 'item-row';
+            div.innerHTML = `
+                <div class="section-header"><span>${item}</span></div>
+                <div class="grid-3">
+                    <div>
+                        <label>Qty</label>
+                        <input type="number" class="op-qty" value="0" min="0" oninput="calculateTotals()">
+                    </div>
+                    <div>
+                        <label>Unit $</label>
+                        <input type="number" class="op-price" value="0" min="0" oninput="calculateTotals()">
+                    </div>
+                    <div>
+                        <label>Total</label>
+                        <input type="text" class="op-total" value="$0" disabled style="background:#eee; font-weight:bold;">
+                    </div>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function buildPrep() {
+        const container = document.getElementById('prepContainer');
+        container.innerHTML = '';
+        prepTypes.forEach((item) => {
+            const div = document.createElement('div');
+            div.className = 'prep-row';
+            div.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <label class="checkbox-label" style="font-weight:600;"><input type="checkbox" class="p-check" onchange="calculateTotals()"> ${item}</label>
+                    <div style="width: 120px;">
+                        <input type="number" class="p-price" value="0" placeholder="Price $" oninput="calculateTotals()">
+                    </div>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function calculateTotals() {
+        // 1. Sections Total
+        let sectionTotal = 0;
+        document.querySelectorAll('.section-item').forEach(sec => {
+            const price = parseFloat(sec.querySelector('.s-price').value) || 0;
+            sectionTotal += price;
+        });
+
+        // 2. Openings Total
+        let openingTotal = 0;
+        document.querySelectorAll('.item-row').forEach(row => {
+            const qty = parseFloat(row.querySelector('.op-qty').value) || 0;
+            const unit = parseFloat(row.querySelector('.op-price').value) || 0;
+            const lineTotal = qty * unit;
+            row.querySelector('.op-total').value = '$' + lineTotal.toFixed(0);
+            openingTotal += lineTotal;
+        });
+
+        // 3. Prep Total
+        let prepTotal = 0;
+        document.querySelectorAll('.prep-row').forEach(row => {
+            const checked = row.querySelector('.p-check').checked;
+            if(checked) {
+                prepTotal += parseFloat(row.querySelector('.p-price').value) || 0;
+            }
+        });
+
+        // 4. Extras & Materials
+        let extrasTotal = parseFloat(document.getElementById('extrasTotal').value) || 0;
+        let materialsCost = parseFloat(document.getElementById('materialsCost').value) || 0;
+
+        // Subtotals & GST
+        let subtotal = sectionTotal + openingTotal + prepTotal + extrasTotal + materialsCost;
+        let gst = subtotal * 0.10;
+        let grandTotal = subtotal + gst;
+
+        // Display updates
+        document.getElementById('displaySectionTotal').innerText = '$' + sectionTotal.toFixed(2);
+        document.getElementById('displayOpeningTotal').innerText = '$' + openingTotal.toFixed(2);
+        document.getElementById('displayPrepTotal').innerText = '$' + prepTotal.toFixed(2);
+        document.getElementById('displayExtrasTotal').innerText = '$' + extrasTotal.toFixed(2);
+        document.getElementById('displayMaterialsTotal').innerText = '$' + materialsCost.toFixed(2);
+        
+        document.getElementById('displaySubtotal').innerText = '$' + subtotal.toFixed(2);
+        document.getElementById('displayGst').innerText = '$' + gst.toFixed(2);
+        document.getElementById('displayGrandTotal').innerText = '$' + grandTotal.toFixed(2);
+    }
+
+    function getFormData() {
+        return {
+            clientName: document.getElementById('clientName').value,
+            propertyAddress: document.getElementById('propertyAddress').value,
+            inspectionDate: document.getElementById('inspectionDate').value,
+            quoteNumber: document.getElementById('quoteNumber').value,
+            houseType: document.getElementById('houseType').value,
+            substrateType: document.getElementById('substrateType').value,
+            accessLevel: document.getElementById('accessLevel').value,
+            extrasTotal: document.getElementById('extrasTotal').value,
+            paintWallsCoats: document.getElementById('paintWallsCoats').value,
+            paintTrimCoats: document.getElementById('paintTrimCoats').value,
+            paintPrimer: document.getElementById('paintPrimer').value,
+            paintColourChange: document.getElementById('paintColourChange').value,
+            paintProduct: document.getElementById('paintProduct').value,
+            paintFinish: document.getElementById('paintFinish').value,
+            materialsCost: document.getElementById('materialsCost').value,
+            materialsNotes: document.getElementById('materialsNotes').value,
+            siteNotes: document.getElementById('siteNotes').value,
+            sections: Array.from(document.querySelectorAll('.section-item')).map(s => ({
+                price: s.querySelector('.s-price').value,
+                cond: s.querySelector('.s-cond').value,
+                prep: s.querySelector('.s-prep').value
+            })),
+            openings: Array.from(document.querySelectorAll('.item-row')).map(o => ({
+                qty: o.querySelector('.op-qty').value,
+                price: o.querySelector('.op-price').value
+            })),
+            preps: Array.from(document.querySelectorAll('.prep-row')).map(p => ({
+                checked: p.querySelector('.p-check').checked,
+                price: p.querySelector('.p-price').value
+            }))
+        };
+    }
+
+    function saveQuote() {
+        const quoteNum = document.getElementById('quoteNumber').value || 'AH-EXT-DEFAULT';
+        const data = getFormData();
+        localStorage.setItem('art_house_ext_quote_' + quoteNum, JSON.stringify(data));
+        alert('External Quote ' + quoteNum + ' saved successfully on device!');
+    }
+
+    function loadQuoteModal() {
+        const keys = Object.keys(localStorage).filter(k => k.startsWith('art_house_ext_quote_'));
+        if(keys.length === 0) {
+            alert('No saved external quotes found on this device.');
+            return;
+        }
+        let list = keys.map(k => k.replace('art_house_ext_quote_', '')).join('\n');
+        let target = prompt('Saved External Quotes:\n' + list + '\n\nEnter Quote Number to load:');
+        if(target && localStorage.getItem('art_house_ext_quote_' + target)) {
+            const data = JSON.parse(localStorage.getItem('art_house_ext_quote_' + target));
+            setFormData(data);
+            alert('Quote ' + target + ' loaded successfully.');
+        }
+    }
+
+    function setFormData(data) {
+        document.getElementById('clientName').value = data.clientName || '';
+        document.getElementById('propertyAddress').value = data.propertyAddress || '';
+        document.getElementById('inspectionDate').value = data.inspectionDate || '';
+        document.getElementById('quoteNumber').value = data.quoteNumber || '';
+        document.getElementById('houseType').value = data.houseType || 'Single Storey House';
+        document.getElementById('substrateType').value = data.substrateType || 'Weatherboard / Timber';
+        document.getElementById('accessLevel').value = data.accessLevel || 'Easy / Ground';
+        document.getElementById('extrasTotal').value = data.extrasTotal || 0;
+        document.getElementById('paintWallsCoats').value = data.paintWallsCoats || '2 coats';
+        document.getElementById('paintTrimCoats').value = data.paintTrimCoats || '2 coats';
+        document.getElementById('paintPrimer').value = data.paintPrimer || 'Required (Full)';
+        document.getElementById('paintColourChange').value = data.paintColourChange || 'No';
+        document.getElementById('paintProduct').value = data.paintProduct || '';
+        document.getElementById('paintFinish').value = data.paintFinish || 'Low Sheen';
+        document.getElementById('materialsCost').value = data.materialsCost || 0;
+        document.getElementById('materialsNotes').value = data.materialsNotes || '';
+        document.getElementById('siteNotes').value = data.siteNotes || '';
+
+        if(data.sections) {
+            const secEls = document.querySelectorAll('.section-item');
+            data.sections.forEach((s, i) => {
+                if(secEls[i]) {
+                    secEls[i].querySelector('.s-price').value = s.price;
+                    secEls[i].querySelector('.s-cond').value = s.cond;
+                    secEls[i].querySelector('.s-prep').value = s.prep;
+                }
+            });
+        }
+
+        if(data.openings) {
+            const opEls = document.querySelectorAll('.item-row');
+            data.openings.forEach((o, i) => {
+                if(opEls[i]) {
+                    opEls[i].querySelector('.op-qty').value = o.qty;
+                    opEls[i].querySelector('.op-price').value = o.price;
+                }
+            });
+        }
+
+        if(data.preps) {
+            const prepEls = document.querySelectorAll('.prep-row');
+            data.preps.forEach((p, i) => {
+                if(prepEls[i]) {
+                    prepEls[i].querySelector('.p-check').checked = p.checked;
+                    prepEls[i].querySelector('.p-price').value = p.price;
+                }
+            });
+        }
+        calculateTotals();
+    }
+
+    function newQuote() {
+        if(confirm('Start a new clean external estimate? Unsaved changes will be cleared.')) {
+            document.getElementById('clientName').value = '';
+            document.getElementById('propertyAddress').value = '';
+            document.getElementById('extrasTotal').value = 0;
+            document.getElementById('materialsCost').value = 0;
+            document.getElementById('materialsNotes').value = '';
+            document.getElementById('siteNotes').value = '';
+            document.getElementById('quoteNumber').value = 'AH-EXT-' + Math.floor(100000 + Math.random() * 900000);
+            buildSections();
+            buildOpenings();
+            buildPrep();
+            calculateTotals();
+        }
+    }
+
+    window.onload = initApp;
+</script>
+</body>
+</html>
